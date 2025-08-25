@@ -29,4 +29,11 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
     const {email, password} = req.body
+    try {
+        const user = User.findOne({email})
+        if(!user) return res.status(401).json({error: "user not found"});
+        const isMatch = await bcrypt.compare(password, user.password);
+    } catch (error) {
+        
+    }
 }
